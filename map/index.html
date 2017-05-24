@@ -1,0 +1,66 @@
+<head>
+</head>
+<body>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+  
+  <script src="geodata.js"></script>
+
+  <div id="mapid" style="width: 600px; height: 400px; display: block; margin-left: auto; margin-right: auto"></div>
+  <script>
+    var view_level = 12;
+    var circle_colour = '#FF9900';
+    var circle_centre = '#E5FF00';
+    var typhoon = [53.4029433, -2.9852423];
+    var hawk = [53.3901250, -2.97894570];
+
+    var geojsonFeature = {
+         "type": "LineString",
+         "coordinates": [ [53.3895184629860, -2.978915153677180], [53.3901250, -2.97894570] ]
+     };
+
+    var mymap = L.map('mapid').setView(typhoon, view_level);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'youraccesskeygoeshere'
+    }).addTo(mymap);
+
+    var myLines = [{
+        "type": "LineString",
+        "coordinates": [[-2.978915153677180, 53.3895184629860], [-2.97894570, 53.3901250]]
+    }, {
+        "type": "LineString",
+        "coordinates": [[-2.97891515367718, 53.389529191823], [-2.97894570, 53.3901250]]
+    }, {
+        "type": "LineString",
+        "coordinates": [[-2.98498767524885, 53.402457440045], [-2.984601, 53.402943]]
+    }, {
+        "type": "LineString",
+        "coordinates": [[-2.98492330222865, 53.403208458614], [-2.9824047, 53.40368]]
+    }];
+
+    var myStyle = {
+        "color": "#ff7800",
+        "weight": 5,
+        "opacity": 0.65
+    };
+
+    L.geoJSON(myLines, {
+        style: myStyle
+    }).addTo(mymap);
+
+
+    L.marker(typhoon).addTo(mymap);
+    L.marker(hawk).addTo(mymap);
+    /*
+    var circle = L.circle(typhoon, {
+        color: circle_colour,
+        fillColor: circle_centre,
+        fillOpacity: 0.3,
+        radius: 2000
+    }).addTo(mymap);
+    */
+  </script>
+</body>
